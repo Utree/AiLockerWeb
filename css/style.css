@@ -1,0 +1,80 @@
+body {
+  background-color: #fff;
+}
+/* foodコンテナ */
+.food-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  width: 100%;
+}
+/* カード内の文字 */
+.food-container div[class="contents"] {
+  padding: 30px;
+  flex-grow: 1;
+}
+/* カード内のタイトル */
+.food-container h2 {
+  color: #339966;
+}
+/*       カード(モバイルファースト) */
+.food-container .card {
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px #ccc;
+  width: 40%;
+  flex-basis:40%;
+  background-color: white;
+}
+.food-container img {
+  width: 100%;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  margin: 0px;
+  margin-top: -20px;
+}
+/* カードクリック時の挙動 */
+.card {
+  position: relative;
+  z-index: 1;
+  margin: 25px;
+}
+.card a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-indent:-999px;
+  z-index: 2;
+}
+
+/*ダンプ用隠れcanvas*/
+canvas {
+  display: none;
+}
+
+/*撮影ボタン*/
+.btn-circle-3d {
+  display: inline-block;
+  text-decoration: none;
+  background: #81d4ff;
+  color: #FFF;
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+  overflow: hidden;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+  border-bottom: solid 3px #656565;
+  transition: .4s;
+}
+
+.btn-circle-3d:active {
+  -webkit-transform: translateY(2px);
+  transform: translateY(2px);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.15);
+  border-bottom: none;
+}
