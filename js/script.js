@@ -10,10 +10,12 @@ let handleSuccess = function(stream) {
   // 起動時にカメラ入力をビデオタグに出力する
   player.srcObject = stream;
   
+  // Videoタグを横幅いっぱいに広げる
   player.width = window.innerWidth;
 };
 
-function predict(label) {
+// 推論結果を表示
+function showResult(label) {
     // モーダルウィンドウの内容を変更
     $('#predict-label').text(label);
     $('#predict-image').attr("src","svg/" + label + ".svg");
@@ -39,8 +41,8 @@ function getAccuracyScores(imageData) {
                 // モデルの推論
                 return model.execute(input).dataSync();  
             })
-            
-            predict(label[z.indexOf(Math.max.apply(null, z))]);
+            // 最大値のラベルをresult関数に渡す
+            showResult(label[z.indexOf(Math.max.apply(null, z))]);
         })    
         .catch(function(err){
            document.write(err);
