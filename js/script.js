@@ -4,6 +4,10 @@ let player = document.getElementById('player');
 let snapshotCanvas = document.getElementById('snapshot');
 // ボタンタグ
 let captureButton = document.getElementById('capture');
+// ラズパイのngrokURL
+let raspiServerURL = '';
+// ラズパイに対するリクエストコマンド
+let raspiRequestCommandTmp = '';
 
 // カメラアクセス成功時のコールバック
 let handleSuccess = function(stream) {
@@ -14,10 +18,45 @@ let handleSuccess = function(stream) {
   player.width = window.innerWidth;
 };
 
+// ラズパイに対してリクエストを送信
+function sendRequest() {
+    if(raspiRequestCommandTmp == 'lock' || raspiRequestCommandTmp == 'unlock') {
+        
+        // ラズパイのcors設定を忘れていたので、中間サーバーにリクエストを任せる
+        fetch("https://get-request-to-raspi.herokuapp.com", {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            "url": raspiServerURL,
+            "path": raspiRequestCommandTmp
+          })
+        })
+        .then((response) => {
+            console.log(response.ok);
+        });
+    }
+    
+    $('#modal1').modal('hide');
+}
+
 // 推論結果を表示
 function showResult(label) {
+    let text = label;
+    raspiRequestCommandTmp = '';
+    
+    if(text == 'cat') { // 猫を認識したときLock
+        text = 'ロックしますか?'
+        raspiRequestCommandTmp = 'lock';
+    } else if(text == 'dog') { // 犬を認識したときUnlock
+        text = '解除しますか?'
+        raspiRequestCommandTmp = 'unlock';
+    }
+    
     // モーダルウィンドウの内容を変更
-    $('#predict-label').text(label);
+    $('#predict-label').text(text);
     $('#predict-image').attr("src","svg/" + label + ".svg");
     // モーダルウィンドウを表示
     $('#modal1').modal('show');
@@ -48,6 +87,20 @@ function getAccuracyScores(imageData) {
            document.write(err);
         });
 }
+
+// ラズパイサーバーのngrokURLを取得
+fetch('https://future-desktop-api.herokuapp.com/', {method: 'GET', mode: 'cors'})
+	.then((response) => response.body.getReader())
+    .then((reader) => {
+        // ReadableStream.read()はPromiseを返す。
+        // Promiseは{ done, value }として解決される。
+        reader.read().then(({done, value}) => {
+          // データを読み込んだとき：doneはfalse, valueは値。
+          // データを読み込み終わったとき：doneはtrue, valueはundefined。
+          const decoder = new TextDecoder();
+          raspiServerURL = decoder.decode(value);
+        })
+    });
 
 // ボタン押下時のイベント
 captureButton.addEventListener('click', function() {
