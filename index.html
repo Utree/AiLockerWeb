@@ -10,16 +10,16 @@
 
       gtag('config', 'UA-142558279-1');
     </script>
-    
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AiLocker Webデモ</title>
-    
+
     <!-- Material Design for Bootstrap CSS -->
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Titillium+Web:900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+
     <!--カスタマイズ CSS-->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -28,7 +28,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 80px;">
         <a class="navbar-brand" href="#" style="font-size: 30px;font-family: 'Titillium Web', sans-serif;">Ai Locker Web</a>
     </nav>
-    
+
     <!-- モーダルウィンドウ -->
     <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="label1" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -44,10 +44,10 @@
         </div>
       </div>
     </div>
-    
+
     <!--表示用ビデオタグ-->
     <video id="player" playsinline muted autoplay></video>
-    
+
     <!--ボタンの中央寄せ用divタグ-->
     <div style="width=100%; text-align: center">
       <!--撮影ボタン-->
@@ -55,17 +55,17 @@
           <i class="material-icons btn-circle-3d" style="color: white; font-size: 50px;">photo_camera</i>
       </a>
     </div>
-    
+
     <!--ダンプ用隠れタグ-->
     <canvas id="snapshot"></canvas>
-    
+
     <!--Tensorflow.jsをインポート-->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.12.5"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/1.1.2/tf.min.js"></script>
     <!--ラベル一覧-->
     <script src="js/labels.js"></script>
     <!--実装-->
     <script src="js/script.js"></script>
-    
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
