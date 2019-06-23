@@ -13,7 +13,7 @@ let raspiRequestCommandTmp = '';
 let handleSuccess = function(stream) {
   // 起動時にカメラ入力をビデオタグに出力する
   player.srcObject = stream;
-  
+
   // Videoタグを横幅いっぱいに広げる
   player.width = window.innerWidth;
 };
@@ -21,7 +21,7 @@ let handleSuccess = function(stream) {
 // ラズパイに対してリクエストを送信
 function sendRequest() {
     if(raspiRequestCommandTmp == 'lock' || raspiRequestCommandTmp == 'unlock') {
-        
+
         // ラズパイのcors設定を忘れていたので、中間サーバーにリクエストを任せる
         fetch("https://get-request-to-raspi.herokuapp.com", {
           method: "POST",
@@ -38,7 +38,7 @@ function sendRequest() {
             console.log(response.ok);
         });
     }
-    
+
     $('#modal1').modal('hide');
 }
 
@@ -46,7 +46,7 @@ function sendRequest() {
 function showResult(label) {
     let text = label;
     raspiRequestCommandTmp = '';
-    
+
     if(text == 'cat') { // 猫を認識したときLock
         text = 'ロックしますか?'
         raspiRequestCommandTmp = 'lock';
@@ -54,7 +54,7 @@ function showResult(label) {
         text = '解除しますか?'
         raspiRequestCommandTmp = 'unlock';
     }
-    
+
     // モーダルウィンドウの内容を変更
     $('#predict-label').text(text);
     $('#predict-image').attr("src","svg/" + label + ".svg");
@@ -72,17 +72,19 @@ function getAccuracyScores(imageData) {
                 // js配列をテンソルに変換
                 const channels = 3; // grayscale
                 let input = tf.fromPixels(imageData, channels);
-                
+
                 // 正則化
                 input = tf.cast(input, 'float32').div(tf.scalar(255));
                 input = input.expandDims();
-                
+
                 // モデルの推論
-                return model.execute(input).dataSync();  
+                return model.execute(input).dataSync();
             })
+            console.log(z);
+            
             // 最大値のラベルをresult関数に渡す
             showResult(label[z.indexOf(Math.max.apply(null, z))]);
-        })    
+        })
         .catch(function(err){
            document.write(err);
         });
